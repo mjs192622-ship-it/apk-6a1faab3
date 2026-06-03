@@ -1,0 +1,88 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Apply custom app icon
+      env:
+        ICON_DATA: "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"
+      run: |
+        echo "$ICON_DATA" | base64 -d > /tmp/app_icon
+        for entry in mdpi:48 hdpi:72 xhdpi:96 xxhdpi:144 xxxhdpi:192; do
+          dir="${entry%%:*}"
+          size="${entry##*:}"
+          mkdir -p "app/src/main/res/mipmap-$dir"
+          convert -resize ${size}x${size}! /tmp/app_icon "app/src/main/res/mipmap-$dir/ic_launcher.png" 2>/dev/null || cp /tmp/app_icon "app/src/main/res/mipmap-$dir/ic_launcher.png"
+          cp "app/src/main/res/mipmap-$dir/ic_launcher.png" "app/src/main/res/mipmap-$dir/ic_launcher_round.png" 2>/dev/null || true
+        done
+
+    - name: Generate placeholder launcher icons if missing
+      run: |
+        for dir in app/src/main/res/mipmap-mdpi app/src/main/res/mipmap-hdpi app/src/main/res/mipmap-xhdpi app/src/main/res/mipmap-xxhdpi app/src/main/res/mipmap-xxxhdpi; do
+          mkdir -p $dir
+          if [ ! -f "$dir/ic_launcher.png" ]; then
+            convert -size 192x192 xc:#6366f1 -fill white -font DejaVu-Sans -pointsize 80 -gravity center -annotate 0 'W' "$dir/ic_launcher.png" 2>/dev/null || \
+            python3 -c "import struct,zlib; data=struct.pack('>IHHI',1,192,192,0); open('$dir/ic_launcher.png','wb').write(b'\x89PNG\r\n\x1a\n'+struct.pack('>I',13)+b'IHDR'+struct.pack('>IIBBBBB',192,192,8,2,0,0,0)+struct.pack('>I',zlib.crc32(b'IHDR'+struct.pack('>IIBBBBB',192,192,8,2,0,0,0))&0xffffffff)+b'\x00'*100)"
+            cp "$dir/ic_launcher.png" "$dir/ic_launcher_round.png" 2>/dev/null || true
+          fi
+        done
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-version: '8.11.1'
+
+    - name: Build Debug APK
+      run: gradle assembleDebug --no-daemon
+
+    - name: Build Release AAB (for Play Store)
+      run: gradle bundleRelease --no-daemon
+      continue-on-error: true
+
+    - name: Upload Debug APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: debug-apk
+        path: app/build/outputs/apk/debug/*.apk
+
+    - name: Upload Release AAB
+      uses: actions/upload-artifact@v4
+      if: success()
+      continue-on-error: true
+      with:
+        name: release-aab
+        path: app/build/outputs/bundle/release/*.aab
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      if: success()
+      with:
+        tag_name: build-${{ github.run_number }}
+        name: Build #${{ github.run_number }}
+        files: |
+          app/build/outputs/apk/debug/*.apk
+          app/build/outputs/bundle/release/*.aab
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
